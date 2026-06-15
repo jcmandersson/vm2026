@@ -1036,5 +1036,5 @@ function fetchLiveResults(cb){var url="https://n8n.charma.io/webhook/vm2026-resu
 </script></body></html>"""
 
 out=TPL.replace("__DATA__",json.dumps(D,ensure_ascii=False)).replace("__ISO__",json.dumps(ISO,ensure_ascii=False)).replace("__RESULTS__",json.dumps(RJS,ensure_ascii=False)).replace("__UPD__",UPD)
-open("vm-tipset-2026.html","w",encoding="utf-8").write(out)
+open("index.html","w",encoding="utf-8").write(out)
 print("written",len(out),"bytes")

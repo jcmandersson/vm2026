@@ -11,9 +11,9 @@ game (in Swedish). The served page is one self-contained HTML file with inline C
 
 **Every change to HTML/CSS/JS must be made in BOTH files, identically:**
 
-1. `vm-tipset-2026.html` – the live, served file (what users see now).
+1. `index.html` – the live, served file (what users see now; GitHub Pages serves it at the root).
 2. `build_full.py` – contains the entire page as a template string `TPL`; it regenerates
-   `vm-tipset-2026.html` from scratch.
+   `index.html` from scratch.
 
 Why: `build_full.py` is the source of truth for a full rebuild. If you only edit the HTML,
 a future `python build_full.py` overwrites your change. If you only edit `build_full.py`,
@@ -32,7 +32,7 @@ byte-identical for all non-templated parts.
   groups, knockout structure. Injected into `build_full.py`'s `TPL` via `__DATA__`/`__ISO__`.
 - `results.json` → facit: `group` (nr → `[home,away]`), `snapshot` (name → rank, for trend
   arrows), `updated`, knockout fields (mostly empty until later). Injected via `__RESULTS__`/`__UPD__`.
-- `build_full.py` writes the whole `vm-tipset-2026.html`.
+- `build_full.py` writes the whole `index.html`.
 - `build_site.py` re-injects only `results.json` into the existing HTML using markers:
   - `/*RESULTS_START*/const RESULTS=…;/*RESULTS_END*/`
   - `const totalUpdated="Senast uppdaterad …";`
@@ -86,6 +86,6 @@ byte-identical for all non-templated parts.
 
 ## Deployment
 
-GitHub Pages serves `index.html` (redirect) → `vm-tipset-2026.html`. Repo:
+GitHub Pages serves `index.html` directly (it *is* the self-contained app — no redirect file). Repo:
 `git@github.com:jcmandersson/vm2026.git`, URL `https://jcmandersson.github.io/vm2026/`.
 Live data needs `Access-Control-Allow-Origin` on the n8n webhook for that origin.

@@ -31,9 +31,8 @@ Sidan har ljust/mörkt läge (sparas), en intro-animation vid första besöket p
 
 | Fil | Roll |
 |-----|------|
-| `vm-tipset-2026.html` | Den färdiga, självständiga sidan (det som servas). All CSS/JS är inbäddad. |
-| `index.html` | Liten omdirigering till `vm-tipset-2026.html` (så GitHub Pages-roten funkar). |
-| `build_full.py` | Full generator. Innehåller hela mallen (HTML/CSS/JS) och bygger om `vm-tipset-2026.html` från `dataset.json` + `results.json`. |
+| `index.html` | Den färdiga, självständiga sidan (det som servas på GitHub Pages-roten). All CSS/JS är inbäddad. |
+| `build_full.py` | Full generator. Innehåller hela mallen (HTML/CSS/JS) och bygger om `index.html` från `dataset.json` + `results.json`. |
 | `build_site.py` | Lätt uppdaterare. Petar bara in färska resultat (`results.json`) i den befintliga HTML:en. Körs t.ex. av en schemalagd uppgift efter varje match. |
 | `dataset.json` | Statisk data: deltagare, allas tips, matchprogram (fixtures), grupper, slutspelsstruktur. |
 | `results.json` | Facit: gruppresultat per match-nr, tidsstämpel, ranking-snapshot (för trendpilar) m.m. |
@@ -60,8 +59,8 @@ Det finns två lager:
 Kör från projektmappen (läser `dataset.json`/`results.json` relativt):
 
 ```bash
-python build_full.py      # bygger om hela vm-tipset-2026.html (struktur + data)
-python build_site.py      # uppdaterar bara resultaten i vm-tipset-2026.html
+python build_full.py      # bygger om hela index.html (struktur + data)
+python build_site.py      # uppdaterar bara resultaten i index.html
 ```
 
 ## Teknik
@@ -75,10 +74,10 @@ python build_site.py      # uppdaterar bara resultaten i vm-tipset-2026.html
 
 1. Pusha repot till `git@github.com:jcmandersson/vm2026.git`.
 2. GitHub → repo → **Settings → Pages → Deploy from a branch → main → / (root)**.
-3. Sidan hamnar på https://jcmandersson.github.io/vm2026/ (roten omdirigerar till appen).
+3. Sidan hamnar på https://jcmandersson.github.io/vm2026/ (`index.html` *är* appen).
 4. Sätt `Access-Control-Allow-Origin: https://jcmandersson.github.io` (eller `*`) i n8n
    (Respond to Webhook) så live-hämtningen funkar.
 
-Endast `index.html` + `vm-tipset-2026.html` behövs för att sidan ska fungera. Bygg-filerna
+Endast `index.html` behövs för att sidan ska fungera. Bygg-filerna
 (`build_*.py`, `*.json`) kan versionshanteras för bekvämlighet – men tänk på att
 `dataset.json` då blir publikt läsbart (samma data finns dock redan i den publika HTML:en).
