@@ -1,0 +1,78 @@
+{
+ "group": {
+  "1": [
+   2,
+   0
+  ],
+  "2": [
+   2,
+   1
+  ],
+  "3": [
+   1,
+   1
+  ],
+  "7": [
+   4,
+   1
+  ],
+  "5": [
+   1,
+   1
+  ],
+  "8": [
+   2,
+   0
+  ],
+  "4": [
+   1,
+   1
+  ],
+  "6": [
+   0,
+   1
+  ],
+  "9": [
+   7,
+   1
+  ],
+  "10": [
+   1,
+   0
+  ],
+  "11": [
+   2,
+   2
+  ],
+  "12": [
+   5,
+   1
+  ]
+ },
+ "r32": [],
+ "r16": [],
+ "qf": [],
+ "sf": [],
+ "final": [],
+ "champion": null,
+ "updated": "15 juni 2026, 08.30",
+ "note": "auto-hämtat från webben – verifiera vid tvist",
+ "snapshot": {
+  "Malin Tholén": 1,
+  "Ted Hallberg": 2,
+  "Thomas Hallberg": 3,
+  "Tobbe": 4,
+  "Henry Hallberg": 5,
+  "Sven Tholén": 6,
+  "Elisabet Tholén": 7,
+  "Erik Ålander": 8,
+  "Helena Hallberg": 9,
+  "Hugo Svensson": 10,
+  "Johanna Tholén": 11,
+  "Marcus Andelius": 12,
+  "My & Simon Hallberg": 13,
+  "Peter Jakobsson": 14,
+  "Johan Nilsson": 15,
+  "Lovisa Tholén": 16
+ }
+}
