@@ -226,6 +226,8 @@ body::before{content:"";position:fixed;inset:-15% -10% auto -10%;height:90vh;z-i
 .gtab th:nth-child(n+2),.gtab td:nth-child(n+2){width:20px}
 .gtab th.gd,.gtab td.gd{width:26px}
 .gtab td.gd.pos{color:var(--up);font-weight:800}.gtab td.gd.neg{color:var(--down);font-weight:800}
+.gtab td:first-child .flag-img,.gtab td:first-child .flagfb{margin-right:7px}
+@media(min-width:561px){.grid2{grid-template-columns:repeat(auto-fill,minmax(420px,1fr))}.gtab td,.gtab th{padding:7px 6px}.gtab th:nth-child(n+2),.gtab td:nth-child(n+2){width:30px}.gtab th.gd,.gtab td.gd{width:38px}}
 .gtab tr.qual td:first-child{box-shadow:inset 3px 0 0 var(--grass)}
 .bracket{display:flex;gap:20px;overflow-x:auto;padding:4px 2px 12px;-webkit-overflow-scrolling:touch}
 .round{display:flex;flex-direction:column;justify-content:space-around;gap:12px;min-width:175px}
@@ -1021,7 +1023,7 @@ function groupTable(letter){const teams=D.groups[letter];const row={};teams.forE
   D.fixtures.filter(f=>f.grp===letter).forEach(f=>{const r=RESULTS.group[f.nr];if(!r)return;const h=row[f.home],a=row[f.away];if(!h||!a)return;h.P++;a.P++;h.GF+=r[0];h.GA+=r[1];a.GF+=r[1];a.GA+=r[0];if(r[0]>r[1]){h.W++;a.L++;h.Pts+=3;}else if(r[0]<r[1]){a.W++;h.L++;a.Pts+=3;}else{h.D++;a.D++;h.Pts++;a.Pts++;}});
   return teams.map(t=>[t,row[t]]).sort((x,y)=>y[1].Pts-x[1].Pts||(y[1].GF-y[1].GA)-(x[1].GF-x[1].GA));}
 function renderTables(){document.getElementById("tablesWrap").innerHTML=Object.keys(D.groups).sort().map(L=>{const rows=groupTable(L);
-  return `<div class="gtab"><h4>Grupp ${L}</h4><table><thead><tr><th>Lag</th><th>S</th><th>V</th><th>O</th><th>F</th><th>GM</th><th>IM</th><th class="gd">MS</th><th>P</th></tr></thead><tbody>${rows.map((r,i)=>`<tr class="${i<2?'qual':''}"><td style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${flag(r[0],13)} ${r[0]}</td><td>${r[1].P}</td><td>${r[1].W}</td><td>${r[1].D}</td><td>${r[1].L}</td><td>${r[1].GF}</td><td>${r[1].GA}</td><td class="gd ${r[1].GF-r[1].GA>0?'pos':r[1].GF-r[1].GA<0?'neg':''}">${r[1].GF-r[1].GA>0?"+"+(r[1].GF-r[1].GA):r[1].GF-r[1].GA}</td><td><b>${r[1].Pts}</b></td></tr>`).join("")}</tbody></table></div>`;}).join("");}
+  return `<div class="gtab"><h4>Grupp ${L}</h4><table><thead><tr><th>Lag</th><th>S</th><th>V</th><th>O</th><th>F</th><th>GM</th><th>IM</th><th class="gd">MS</th><th>P</th></tr></thead><tbody>${rows.map((r,i)=>`<tr class="${i<2?'qual':''}"><td style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${flag(r[0],13)}${r[0]}</td><td>${r[1].P}</td><td>${r[1].W}</td><td>${r[1].D}</td><td>${r[1].L}</td><td>${r[1].GF}</td><td>${r[1].GA}</td><td class="gd ${r[1].GF-r[1].GA>0?'pos':r[1].GF-r[1].GA<0?'neg':''}">${r[1].GF-r[1].GA>0?"+"+(r[1].GF-r[1].GA):r[1].GF-r[1].GA}</td><td><b>${r[1].Pts}</b></td></tr>`).join("")}</tbody></table></div>`;}).join("");}
 function fillSelects(){const a=document.getElementById("h2hA"),b=document.getElementById("h2hB");const o=PLIST.map(p=>`<option>${p.name}</option>`).join("");a.innerHTML=o;b.innerHTML=o;a.selectedIndex=0;b.selectedIndex=Math.min(1,PLIST.length-1);a.onchange=b.onchange=renderH2H;renderH2H();}
 function groupRows(pr){
   let exact=0,right=0,gained=0,played=0;
