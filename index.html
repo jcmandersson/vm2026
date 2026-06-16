@@ -235,11 +235,25 @@ body::before{content:"";position:fixed;inset:-15% -10% auto -10%;height:90vh;z-i
 .gtab{border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden;background:var(--card)}
 .gtab h4{margin:0;background:linear-gradient(135deg,var(--blue),var(--indigo));color:#fff;padding:9px 12px;font-size:13.5px}
 .gtab table{width:100%;border-collapse:collapse;font-size:11.5px;table-layout:fixed}.gtab td,.gtab th{padding:6px 3px;text-align:center;border-bottom:1px solid var(--line2)}
-.gtab th{font-size:10px;text-transform:uppercase;color:var(--muted)}.gtab td:first-child,.gtab th:first-child{text-align:left}
-.gtab th:nth-child(n+2),.gtab td:nth-child(n+2){width:20px}
+.gtab th{font-size:10px;text-transform:uppercase;color:var(--muted)}.gtab td:first-child,.gtab th:first-child{text-align:left;padding-left:10px}
+.gtab th:nth-child(n+2),.gtab td:nth-child(n+2){width:18px}
 .gtab th.gd,.gtab td.gd{width:26px}
 .gtab td.gd.pos{color:var(--up);font-weight:800}.gtab td.gd.neg{color:var(--down);font-weight:800}
 .gtab td:first-child .flag-img,.gtab td:first-child .flagfb{margin-right:7px}
+.gtlegend{display:flex;flex-wrap:wrap;gap:5px 14px;margin-top:14px;font-size:11.5px;color:var(--muted)}
+.gtlegend b{color:var(--ink);font-weight:800;margin-right:3px}
+.bt-intro{font-size:13px;color:var(--muted);margin:0 0 12px;line-height:1.5}
+.bt-row{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:11px;background:var(--soft);border:1px solid var(--line2);font-size:13px;margin-bottom:6px}
+.bt-row.q{background:color-mix(in srgb,var(--grass) 12%,transparent);border-color:color-mix(in srgb,var(--grass) 22%,transparent)}
+.bt-row.q .bt-rank{color:var(--grass-deep)}
+.bt-row.out{opacity:.58}
+.bt-rank{width:16px;text-align:center;font-weight:800;color:var(--muted);font-size:12px;flex:0 0 auto}
+.bt-grp{width:20px;height:20px;border-radius:6px;background:var(--soft2);display:grid;place-items:center;font-weight:800;font-size:10.5px;color:var(--muted);flex:0 0 auto}
+.bt-team{flex:1;min-width:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bt-stat{font-weight:800;font-size:12px;color:var(--muted);flex:0 0 auto}
+.bt-gd{min-width:30px;text-align:right}
+.bt-cut{display:flex;align-items:center;gap:8px;margin:10px 2px;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--grass-deep);font-weight:800}
+.bt-cut::before,.bt-cut::after{content:"";flex:1;height:1px;background:color-mix(in srgb,var(--grass) 38%,transparent)}
 @media(min-width:561px){.grid2{grid-template-columns:repeat(auto-fill,minmax(420px,1fr))}.gtab td,.gtab th{padding:7px 6px}.gtab th:nth-child(n+2),.gtab td:nth-child(n+2){width:30px}.gtab th.gd,.gtab td.gd{width:38px}}
 .gtab tr.qual td:first-child{box-shadow:inset 3px 0 0 var(--grass)}
 .bracket{display:flex;gap:20px;overflow-x:auto;padding:4px 2px 12px;-webkit-overflow-scrolling:touch}
@@ -828,7 +842,7 @@ body::before{-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent);
 <div id="koNote"></div>
 <div class="koround" id="koRoundSel"></div>
 <div class="kogrid" id="bracketWrap"></div></div></section>
-  <section class="view" id="tables"><div class="card"><div class="ttl"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Grupptabeller · faktiska resultat</div><div class="grid2" id="tablesWrap"></div></div></section>
+  <section class="view" id="tables"><div class="card"><div class="ttl"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>Grupptabeller · faktiska resultat</div><div class="grid2" id="tablesWrap"></div><div class="gtlegend"><span><b>S</b> Spelade</span><span><b>V</b> Vunna</span><span><b>O</b> Oavgjorda</span><span><b>F</b> Förlorade</span><span><b>GM</b> Gjorda mål</span><span><b>IM</b> Insläppta mål</span><span><b>MS</b> Målskillnad</span><span><b>P</b> Poäng</span></div></div><div class="card"><div class="ttl"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v3a6 6 0 0 1-12 0V4z"/><path d="M6 5H3v2a3 3 0 0 0 3 3"/><path d="M18 5h3v2a3 3 0 0 1-3 3"/><path d="M9 18h6M12 14v4"/></svg></span>Kampen om slutspelet</div><p class="bt-intro">Utöver gruppettorna och grupptvåorna går de <b>8 bästa grupptreorna</b> vidare till slutspelet. Så ligger treorna till just nu – de över strecket är på väg vidare:</p><div id="bestThirds"></div></div></section>
   <section class="view" id="h2h"><div class="card"><div class="ttl"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17.5" cy="9" r="2.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M15 20a5 5 0 0 1 6-4"/></svg></span>Head-to-head</div><div class="h2h-pick"><select id="h2hA"></select><select id="h2hB"></select></div><div id="h2hResult"></div></div></section><section class="view" id="regler"><div class="card reg">
   <div class="ttl"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2h9l4 4v16H6z"/><path d="M14 2v5h5"/><path d="M9 13h7M9 17h6"/></svg></span>Regler & priser</div>
   <div class="big"><div class="pcard"><div class="v">100 kr</div><div class="l">Insats</div></div><div class="pcard"><div class="v">494</div><div class="l">Maxpoäng</div></div><div class="pcard"><div class="v">16</div><div class="l">Deltagare</div></div><div class="pcard"><div class="v">1600 kr</div><div class="l">Prispott</div></div></div>
@@ -1051,7 +1065,12 @@ function groupTable(letter){const teams=D.groups[letter];const row={};teams.forE
   D.fixtures.filter(f=>f.grp===letter).forEach(f=>{const r=RESULTS.group[f.nr];if(!r)return;const h=row[f.home],a=row[f.away];if(!h||!a)return;h.P++;a.P++;h.GF+=r[0];h.GA+=r[1];a.GF+=r[1];a.GA+=r[0];if(r[0]>r[1]){h.W++;a.L++;h.Pts+=3;}else if(r[0]<r[1]){a.W++;h.L++;a.Pts+=3;}else{h.D++;a.D++;h.Pts++;a.Pts++;}});
   return teams.map(t=>[t,row[t]]).sort((x,y)=>y[1].Pts-x[1].Pts||(y[1].GF-y[1].GA)-(x[1].GF-x[1].GA));}
 function renderTables(){document.getElementById("tablesWrap").innerHTML=Object.keys(D.groups).sort().map(L=>{const rows=groupTable(L);
-  return `<div class="gtab"><h4>Grupp ${L}</h4><table><thead><tr><th>Lag</th><th>S</th><th>V</th><th>O</th><th>F</th><th>GM</th><th>IM</th><th class="gd">MS</th><th>P</th></tr></thead><tbody>${rows.map((r,i)=>`<tr class="${i<2?'qual':''}"><td style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${flag(r[0],13)}${r[0]}</td><td>${r[1].P}</td><td>${r[1].W}</td><td>${r[1].D}</td><td>${r[1].L}</td><td>${r[1].GF}</td><td>${r[1].GA}</td><td class="gd ${r[1].GF-r[1].GA>0?'pos':r[1].GF-r[1].GA<0?'neg':''}">${r[1].GF-r[1].GA>0?"+"+(r[1].GF-r[1].GA):r[1].GF-r[1].GA}</td><td><b>${r[1].Pts}</b></td></tr>`).join("")}</tbody></table></div>`;}).join("");}
+  return `<div class="gtab"><h4>Grupp ${L}</h4><table><thead><tr><th>Lag</th><th>S</th><th>V</th><th>O</th><th>F</th><th>GM</th><th>IM</th><th class="gd">MS</th><th>P</th></tr></thead><tbody>${rows.map((r,i)=>`<tr class="${i<2?'qual':''}"><td style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${flag(r[0],13)}${r[0]}</td><td>${r[1].P}</td><td>${r[1].W}</td><td>${r[1].D}</td><td>${r[1].L}</td><td>${r[1].GF}</td><td>${r[1].GA}</td><td class="gd ${r[1].GF-r[1].GA>0?'pos':r[1].GF-r[1].GA<0?'neg':''}">${r[1].GF-r[1].GA>0?"+"+(r[1].GF-r[1].GA):r[1].GF-r[1].GA}</td><td><b>${r[1].Pts}</b></td></tr>`).join("")}</tbody></table></div>`;}).join("");renderBestThirds();}
+function renderBestThirds(){var el=document.getElementById("bestThirds");if(!el)return;
+  var thirds=Object.keys(D.groups).sort().map(function(L){var r=groupTable(L)[2];return r?{grp:L,team:r[0],s:r[1]}:null;}).filter(Boolean);
+  thirds.sort(function(a,b){return b.s.Pts-a.s.Pts||(b.s.GF-b.s.GA)-(a.s.GF-a.s.GA)||b.s.GF-a.s.GF||a.team.localeCompare(b.team);});
+  var html="";thirds.forEach(function(t,i){var gd=t.s.GF-t.s.GA;html+='<div class="bt-row '+(i<8?"q":"out")+'"><span class="bt-rank">'+(i+1)+'</span><span class="bt-grp">'+t.grp+'</span>'+flag(t.team,14)+'<span class="bt-team">'+t.team+'</span><span class="bt-stat">'+t.s.Pts+' p</span><span class="bt-stat bt-gd">'+(gd>0?"+":"")+gd+'</span></div>';if(i===7)html+='<div class="bt-cut">Slutspelsgräns</div>';});
+  el.innerHTML=html;}
 function fillSelects(){const a=document.getElementById("h2hA"),b=document.getElementById("h2hB");const o=PLIST.map(p=>`<option>${p.name}</option>`).join("");a.innerHTML=o;b.innerHTML=o;var _mi=ME?PLIST.findIndex(p=>p.name===ME):-1;a.selectedIndex=_mi>=0?_mi:0;b.selectedIndex=a.selectedIndex===0?Math.min(1,PLIST.length-1):0;a.onchange=b.onchange=renderH2H;renderH2H();}
 function groupRows(pr){
   let exact=0,right=0,gained=0,played=0;
