@@ -355,7 +355,7 @@ body{letter-spacing:-.011em}
 .hdr-deco{position:absolute;inset:0;pointer-events:none;background:radial-gradient(140px 140px at 92% -20%,rgba(255,255,255,.28),transparent 60%),radial-gradient(180px 180px at 6% 130%,rgba(255,255,255,.12),transparent 60%)}
 .hdr::after{content:"";position:absolute;right:-46px;bottom:-66px;width:190px;height:190px;border:2px solid rgba(255,255,255,.16);border-radius:50%;pointer-events:none}
 .hdr::before{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.5),transparent)}
-.hdr-main{position:relative;z-index:2;display:flex;align-items:center;gap:15px}
+.hdr-main{position:relative;z-index:2;display:flex;align-items:center;gap:15px;padding-right:44px}
 .ballwrap{position:relative;width:60px;height:66px;flex:0 0 auto;-webkit-tap-highlight-color:transparent}
 .ball{position:absolute;top:2px;left:6px;width:48px;height:48px;animation:bob 1.5s cubic-bezier(.5,0,.5,1) infinite;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
 .egg-ball{position:fixed;z-index:65;pointer-events:none;will-change:transform,top,left;filter:drop-shadow(0 6px 10px rgba(0,10,40,.35))}
@@ -368,9 +368,9 @@ body{letter-spacing:-.011em}
 .hdr-txt{flex:1;min-width:0}
 .hdr h1{margin:0;font-size:27px;font-weight:900;letter-spacing:-.6px;line-height:1.05;color:#fff;-webkit-text-fill-color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.2)}
 .hdr p{margin:4px 0 0;font-size:13px;font-weight:600;opacity:.92}
-.hdr .tog{flex:0 0 auto;width:42px;height:42px;border-radius:13px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.16);backdrop-filter:blur(8px);color:#fff;font-size:18px;cursor:pointer;transition:.3s var(--ease)}
-@media(hover:hover){.hdr .tog:hover{transform:translateY(-2px) rotate(-10deg);background:rgba(255,255,255,.26)}}
-.hdr .tog{display:grid;place-items:center}.hdr .tog svg{width:20px;height:20px}
+.hdr .tog{position:absolute;top:13px;right:13px;z-index:3;width:34px;height:34px;border-radius:11px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);backdrop-filter:blur(8px);color:#fff;opacity:.82;cursor:pointer;transition:.25s var(--ease)}
+@media(hover:hover){.hdr .tog:hover{opacity:1;background:rgba(255,255,255,.24)}}
+.hdr .tog{display:grid;place-items:center}.hdr .tog svg{width:18px;height:18px}
 .hdr-foot{position:relative;z-index:2;margin-top:14px;display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;opacity:.95}
 .hdr-foot .dot{width:8px;height:8px;border-radius:50%;background:#7CFFB2;animation:pulse 1.8s infinite}
 @media(max-width:560px){.hdr h1{font-size:29px}.hdr{padding:17px 16px 13px}}
@@ -432,7 +432,7 @@ body{letter-spacing:-.011em}
 .hdr p,.hdr-foot{text-shadow:0 1px 7px rgba(0,0,0,.45)}
 .hdr-foot .dot{background:#FFCC02;box-shadow:0 0 0 0 rgba(255,204,2,.6)}
 .ball svg{filter:drop-shadow(0 7px 10px rgba(0,0,0,.45))}
-.hdr .tog{border-color:rgba(255,255,255,.35);background:rgba(255,255,255,.16)}
+.hdr .tog{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.12)}
 @media(max-width:560px){
  .hdr{padding:16px 15px 12px}
  .hdr-main{gap:11px}
@@ -441,7 +441,7 @@ body{letter-spacing:-.011em}
  .ballsh{width:26px;left:9px}
  .hdr h1{font-size:24px;line-height:1.08;word-break:break-word}
  .hdr p{font-size:11.5px}
- .hdr .tog{width:38px;height:38px;font-size:16px}
+ .hdr .tog{width:34px;height:34px}
  .hdr-foot{font-size:11px;gap:5px}
  .msel-btn{max-width:165px}
  .ttl{flex-wrap:wrap;gap:6px}
@@ -765,13 +765,13 @@ body::before{-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent);
 <div class="wrap">
   <header class="hdr">
     <div class="hdr-deco"></div>
+    <button class="tog" id="themeBtn" aria-label="Växla mörkt/ljust läge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
     <div class="hdr-main">
       <div class="ballwrap">
         <span class="ball"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="bc"><circle cx="50" cy="50" r="46"/></clipPath></defs><circle cx="50" cy="50" r="46" fill="#fff" stroke="#0b1530" stroke-width="2.5"/><g clip-path="url(#bc)" fill="#0b1530"><polygon points="69.4,23.3 63.9,6.5 78.2,-3.8 92.5,6.5 87.0,23.3"/><polygon points="81.4,60.2 95.7,49.8 109.9,60.2 104.5,77.0 86.8,77.0"/><polygon points="50.0,83.0 64.3,93.4 58.8,110.1 41.2,110.1 35.7,93.4"/><polygon points="18.6,60.2 13.2,77.0 -4.5,77.0 -9.9,60.2 4.3,49.8"/><polygon points="30.6,23.3 13.0,23.3 7.5,6.5 21.8,-3.8 36.1,6.5"/><polygon points="50.0,32.0 67.1,44.4 60.6,64.6 39.4,64.6 32.9,44.4"/></g><g clip-path="url(#bc)" stroke="#0b1530" stroke-width="2.4" fill="none" stroke-linecap="round"><path d="M50.0 32.0 L50.0 4.0"/><path d="M67.1 44.4 L93.7 35.8"/><path d="M60.6 64.6 L77.0 87.2"/><path d="M39.4 64.6 L23.0 87.2"/><path d="M32.9 44.4 L6.3 35.8"/></g><circle cx="50" cy="50" r="46" fill="none" stroke="#0b1530" stroke-width="2.5"/></svg></span>
         <span class="ballsh"></span>
       </div>
       <div class="hdr-txt"><h1>Loftahammarstipset</h1><p>VM 2026 · 11 juni – 19 juli</p></div>
-      <button class="tog" id="themeBtn" aria-label="Växla mörkt/ljust läge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
     </div>
     <div class="hdr-foot"><span class="dot"></span><span id="updatedAt">—</span></div>
   </header>
