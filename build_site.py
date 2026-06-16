@@ -8,7 +8,7 @@ html=open(os.path.join(HERE,"index.html"),encoding="utf-8").read()
 res=json.load(open(os.path.join(HERE,"results.json"),encoding="utf-8"))
 rjs={"group":res.get("group",{}),"r32":res.get("r32",[]),"r16":res.get("r16",[]),
      "qf":res.get("qf",[]),"sf":res.get("sf",[]),"final":res.get("final",[]),
-     "champion":res.get("champion")}
+     "champion":res.get("champion"),"snapshot":res.get("snapshot",{})}
 newR="/*RESULTS_START*/const RESULTS = "+json.dumps(rjs,ensure_ascii=False)+";/*RESULTS_END*/"
 if "/*RESULTS_START*/" in html:
     html=re.sub(r"/\*RESULTS_START\*/.*?/\*RESULTS_END\*/", lambda m:newR, html, flags=re.S)

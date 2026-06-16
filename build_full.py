@@ -2,7 +2,7 @@ import json
 D=json.load(open("dataset.json",encoding="utf-8"))
 ISO={"Algeriet":"dz","Argentina":"ar","Australien":"au","Belgien":"be","Bosnien":"ba","Brasilien":"br","Colombia":"co","DR Kongo":"cd","Egypten":"eg","Elfenbenskusten":"ci","England":"gb-eng","Equador":"ec","Frankrike":"fr","Ghana":"gh","Haiti":"ht","Irak":"iq","Iran":"ir","Japan":"jp","Jordanien":"jo","Kanada":"ca","Kap Verde":"cv","Kroatien":"hr","Marocko":"ma","Mexiko":"mx","Nederländerna":"nl","Norge":"no","Nya Zeeland":"nz","Panama":"pa","Paraguay":"py","Portugal":"pt","Qatar":"qa","Saudiarabien":"sa","Schweiz":"ch","Senegal":"sn","Skottland":"gb-sct","Spanien":"es","Sverige":"se","Sydafrika":"za","Sydkorea":"kr","Tjeckien":"cz","Tunisien":"tn","Turkiet":"tr","Tyskland":"de","USA":"us","Uruguay":"uy","Uzbekistan":"uz","Österrike":"at","Curacao":"cw","Ecuador":"ec","Bosnien-Hercegovina":"ba"}
 RES=json.load(open("results.json",encoding="utf-8"))
-RJS={"group":RES.get("group",{}),"r32":RES.get("r32",[]),"r16":RES.get("r16",[]),"qf":RES.get("qf",[]),"sf":RES.get("sf",[]),"final":RES.get("final",[]),"champion":RES.get("champion")}
+RJS={"group":RES.get("group",{}),"r32":RES.get("r32",[]),"r16":RES.get("r16",[]),"qf":RES.get("qf",[]),"sf":RES.get("sf",[]),"final":RES.get("final",[]),"champion":RES.get("champion"),"snapshot":RES.get("snapshot",{})}
 UPD=RES.get("updated","")
 
 TPL=r"""<!doctype html>
@@ -193,16 +193,19 @@ body::before{content:"";position:fixed;inset:-15% -10% auto -10%;height:90vh;z-i
 /* RANKING ROWS */
 .rk{display:flex;align-items:center;gap:11px;padding:10px 6px;border-radius:var(--r-sm);cursor:pointer;transition:.2s var(--ease)}
 .rk:hover{background:var(--soft)}
-.rk .pos{width:24px;text-align:center;font-weight:800;color:var(--muted);font-size:14px}
-.rk.top .pos{font-size:16px}
+.rk .pos{width:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;line-height:1}
+.rk .pos .rkn{font-weight:800;color:var(--muted);font-size:14px;line-height:1}
+.rk.top .pos .rkn{font-size:16px}
 .rk .ava{width:34px;height:34px;font-size:12px}
 .rk .who{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}.rk .nm{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rk .pp{font-size:11px;color:var(--muted);font-weight:500}
 .rk .tot{font-weight:900;font-size:17px;margin-left:6px;display:flex;align-items:baseline;gap:3px}
+.rk .fire{font-size:15px;line-height:1;align-self:center;filter:drop-shadow(0 0 5px rgba(255,120,0,.55));animation:flick 1.1s ease-in-out infinite}
+@keyframes flick{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.14) rotate(3deg)}}
 .totu{font-size:10px;font-weight:700;color:var(--muted)}
-.trend{font-weight:800;display:inline-flex;align-items:center;gap:2px;font-size:12px;width:30px;justify-content:flex-end}
-.trend.up{color:var(--up)}.trend.down{color:var(--down)}.trend.flat{color:var(--flat)}
-.trend.up .arr{animation:bob .9s ease-in-out infinite}@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.tr{display:inline-flex;align-items:center;gap:1px;font-size:9.5px;font-weight:800;line-height:1}
+.tr svg{width:9px;height:9px;display:block}
+.tr.up{color:var(--up)}.tr.down{color:var(--down)}
 /* MATCH LIST */
 .mfilter{display:flex;gap:6px;margin-bottom:12px;background:var(--soft);padding:4px;border-radius:12px}
 .mfilter button{flex:1;border:none;background:transparent;color:var(--ink2);font-weight:700;border-radius:9px;padding:8px;cursor:pointer;font-size:12px;transition:.25s var(--ease);color:var(--muted)}
@@ -252,6 +255,8 @@ select{font-size:14px;padding:10px 12px;border-radius:11px;border:1px solid var(
 .ps .gp{font-weight:800;color:var(--blue)}.ps .rs{color:var(--muted);font-weight:700;font-size:11.5px}.ps .bd{font-weight:800;min-width:26px;text-align:right}
 .ps.hit{background:color-mix(in srgb,var(--grass) 13%,transparent)}.ps.hit .bd{color:var(--grass-deep)}
 .ps.close{background:color-mix(in srgb,var(--yellow) 15%,transparent)}.ps.miss .bd{color:var(--flat)}
+.ps.pshead{background:none;border:none;padding:0 10px 2px;font-size:9.5px;text-transform:uppercase;letter-spacing:.03em}
+.ps.pshead .mt,.ps.pshead .rs,.ps.pshead .bd{font-weight:800;color:var(--muted)}
 h4{font-weight:800;letter-spacing:-.2px}
 @media(max-width:560px){.wrap{padding:14px 11px 80px}.bar h1{font-size:18px}.sb .sc{font-size:28px}.fbody{gap:4px}.team .tn{font-size:12.5px}.card{padding:15px}}
 
@@ -721,7 +726,7 @@ body::before{-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent);
 </style></head>
 <body>
 <div class="intro" id="introFx"><div class="ibg"><div class="decowrap"><span class="cross"></span><span class="deco ring1"></span><span class="deco ring2"></span></div></div><div class="wave"></div><div class="ball"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="ibc"><circle cx="50" cy="50" r="46"/></clipPath></defs><circle cx="50" cy="50" r="46" fill="#fff" stroke="#0b1530" stroke-width="2.5"/><g clip-path="url(#ibc)" fill="#0b1530"><polygon points="69.4,23.3 63.9,6.5 78.2,-3.8 92.5,6.5 87.0,23.3"/><polygon points="81.4,60.2 95.7,49.8 109.9,60.2 104.5,77.0 86.8,77.0"/><polygon points="50.0,83.0 64.3,93.4 58.8,110.1 41.2,110.1 35.7,93.4"/><polygon points="18.6,60.2 13.2,77.0 -4.5,77.0 -9.9,60.2 4.3,49.8"/><polygon points="30.6,23.3 13.0,23.3 7.5,6.5 21.8,-3.8 36.1,6.5"/><polygon points="50.0,32.0 67.1,44.4 60.6,64.6 39.4,64.6 32.9,44.4"/></g><g clip-path="url(#ibc)" stroke="#0b1530" stroke-width="2.4" fill="none" stroke-linecap="round"><path d="M50.0 32.0 L50.0 4.0"/><path d="M67.1 44.4 L93.7 35.8"/><path d="M60.6 64.6 L77.0 87.2"/><path d="M39.4 64.6 L23.0 87.2"/><path d="M32.9 44.4 L6.3 35.8"/></g><circle cx="50" cy="50" r="46" fill="none" stroke="#0b1530" stroke-width="2.5"/></svg></div><div class="load">Laddar resultat…</div></div>
-<script>(function(){try{var t=localStorage.getItem("loftahammar_theme");if(!t)t=(window.matchMedia&&window.matchMedia("(prefers-color-scheme:dark)").matches)?"dark":"light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();(function(){try{var fx=document.getElementById("introFx");if(!fx)return;var r=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;var s=false;try{s=sessionStorage.getItem("loftahammar_intro")==="1";}catch(e){}if(r||s){if(fx.parentNode)fx.parentNode.removeChild(fx);return;}try{sessionStorage.setItem("loftahammar_intro","1");}catch(e){}}catch(e){var f=document.getElementById("introFx");if(f&&f.parentNode)f.parentNode.removeChild(f);}})();</script>
+<script>(function(){try{var t=localStorage.getItem("loftahammar_theme");if(!t)t="light";document.documentElement.setAttribute("data-theme",t);}catch(e){}})();(function(){try{var fx=document.getElementById("introFx");if(!fx)return;var r=window.matchMedia&&window.matchMedia("(prefers-reduced-motion:reduce)").matches;if(r){if(fx.parentNode)fx.parentNode.removeChild(fx);return;}}catch(e){var f=document.getElementById("introFx");if(f&&f.parentNode)f.parentNode.removeChild(f);}})();</script>
 <div class="wrap">
   <header class="hdr">
     <div class="hdr-deco"></div>
@@ -849,7 +854,7 @@ document.getElementById("updatedAt").innerHTML=totalUpdated;
 document.getElementById("partCount").textContent=D.participants.length+" deltagare";
 const anyPts=PLIST.some(p=>p.total>0);
 
-function trendHtml(p){return p.delta>0?`<span class="trend up">▲<span class="arr">${p.delta}</span></span>`:p.delta<0?`<span class="trend down">▼<span class="arr">${Math.abs(p.delta)}</span></span>`:`<span class="trend flat">–</span>`;}
+function trendHtml(p){if(!p.delta)return"";var u=p.delta>0,n=Math.abs(p.delta);var c=u?'<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.7 6.4 5 3.1l3.3 3.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>':'<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.7 3.6 5 6.9l3.3-3.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';return '<span class="tr '+(u?"up":"down")+'" title="'+(u?"Upp ":"Ner ")+n+' placeringar sedan senaste matchen">'+c+n+'</span>';}
 
 function renderPodium(){
   const top=PLIST.slice(0,3);const order=[top[1],top[0],top[2]];const cls=["p2","p1","p3"];const rank=[2,1,3];
@@ -928,7 +933,10 @@ function renderRank(){
   let rows=PLIST.filter(p=>p.name.toLowerCase().includes(rankQ));
   rows.sort((a,b)=>rankSort==="name"?a.name.localeCompare(b.name):(b[rankSort]-a[rankSort])||(b.total-a.total)||a.name.localeCompare(b.name));
   let banner=ME?meBannerHtml(PLIST.find(p=>p.name===ME)):"";
-  el.innerHTML=banner+(rows.map((p,i)=>`<div class="rk ${p.rank===1&&anyPts?"top":""} ${p.name===ME?"me":""}" data-name="${p.name}" tabindex="0" style="animation:rise .4s var(--ease) ${i*.025}s both"><span class="pos">${p.rank===1&&anyPts?"👑":p.rank}</span><span class="ava" style="background:${colorFor(p.name)}">${initials(p.name)}</span><span class="who"><span class="nm">${p.name}${p.name===ME?' <span class="dut">DU</span>':""}</span><span class="pp"><span class="t-ru">Rätt tecken: ${p.signs} st</span> <span class="t-ex">· varav ${p.exact} exakt</span></span></span><span class="tot"><span class="cn" data-c="${rankSort==="pig"?p.pig:rankSort==="pis"?p.pis:p.total}">0</span><span class="totu">poäng</span></span></div>`).join("")||'<div class="hint" style="padding:8px 4px">Ingen deltagare matchar sökningen.</div>');
+  const _hd=new Date(),_htoday=("0"+_hd.getDate()).slice(-2)+"/"+("0"+(_hd.getMonth()+1)).slice(-2);
+  const hotNrs=MATCHES.filter(m=>m.t==="group"&&m.score&&(m.time||"").indexOf(_htoday)===0).map(m=>m.nr);
+  const hotPts=p=>{let s=0;p.ref.groups.forEach(g=>{if(hotNrs.indexOf(g[0])<0)return;const pp=gpoints([g[2],g[3],g[5]],RESULTS.group[g[0]]);if(pp)s+=pp;});return s;};
+  el.innerHTML=banner+(rows.map((p,i)=>{const hot=hotPts(p)>=5;return `<div class="rk ${p.rank===1&&anyPts?"top":""} ${p.name===ME?"me":""}" data-name="${p.name}" tabindex="0" style="animation:rise .4s var(--ease) ${i*.025}s both"><span class="pos"><span class="rkn">${p.rank===1&&anyPts?"👑":p.rank}</span>${trendHtml(p)}</span><span class="ava" style="background:${colorFor(p.name)}">${initials(p.name)}</span><span class="who"><span class="nm">${p.name}${p.name===ME?' <span class="dut">DU</span>':""}</span><span class="pp"><span class="t-ru">Rätt tecken: ${p.signs} st</span> <span class="t-ex">· varav ${p.exact} exakt</span></span></span><span class="tot">${hot?'<span class="fire" title="5+ poäng idag">🔥</span>':""}<span class="cn" data-c="${rankSort==="pig"?p.pig:rankSort==="pis"?p.pis:p.total}">0</span><span class="totu">poäng</span></span></div>`}).join("")||'<div class="hint" style="padding:8px 4px">Ingen deltagare matchar sökningen.</div>');
   el.querySelectorAll(".rk").forEach(r=>{r.onclick=()=>openPerson(r.dataset.name);r.onkeydown=e=>{if(e.key==="Enter")openPerson(r.dataset.name);};});
   el.querySelectorAll(".cn").forEach(animCount);
 }
@@ -1003,7 +1011,8 @@ function renderTables(){document.getElementById("tablesWrap").innerHTML=Object.k
 function fillSelects(){const a=document.getElementById("h2hA"),b=document.getElementById("h2hB");const o=PLIST.map(p=>`<option>${p.name}</option>`).join("");a.innerHTML=o;b.innerHTML=o;a.selectedIndex=0;b.selectedIndex=Math.min(1,PLIST.length-1);a.onchange=b.onchange=renderH2H;renderH2H();}
 function groupRows(pr){
   let exact=0,right=0,gained=0,played=0;
-  const rows=pr.groups.map(g=>{const r=RESULTS.group[g[0]];const pk=[g[2],g[3],g[5]];const pts=gpoints(pk,r);let c="";if(pts===4){c="hit";exact++;}else if(pts===1){c="close";right++;}else if(pts===0)c="miss";if(pts!=null){gained+=pts;played++;}
+  const head=`<div class="ps pshead"><span class="ph"></span><span class="mt">Lag · <b style="color:var(--blue)">din gissning</b></span><span class="rs">Facit</span><span class="bd">P</span></div>`;
+  const rows=head+pr.groups.map(g=>{const r=RESULTS.group[g[0]];const pk=[g[2],g[3],g[5]];const pts=gpoints(pk,r);let c="";if(pts===4){c="hit";exact++;}else if(pts===1){c="close";right++;}else if(pts===0)c="miss";if(pts!=null){gained+=pts;played++;}
     return `<div class="ps ${c}"><span class="ph">#${g[0]}</span><span class="mt">${flag(g[1],13)} ${abbr(g[1])} <span class="gp">${g[2]}\u2013${g[3]}</span> ${abbr(g[4])} ${flag(g[4],13)}</span><span class="rs">${r?`${r[0]}\u2013${r[1]}`:"\u2014"}</span><span class="bd">${pts==null?"":(pts>0?"+"+pts:"0")}</span></div>`;}).join("");
   return {rows,exact,right,gained,played};
 }
