@@ -14,6 +14,26 @@ TPL=r"""<!doctype html>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&family=Schoolbell&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#0a0e1f">
+<meta name="description" content="Loftahammarstipset – tippa fotbolls-VM 2026 med polarna. Poängliga, matcher, slutspelsträd och grupptabeller live.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Loftahammarstipset">
+<meta property="og:title" content="Loftahammarstipset – VM 2026">
+<meta property="og:description" content="Tippa fotbolls-VM 2026 med polarna – poängliga, matcher och slutspel live.">
+<meta property="og:url" content="https://vm.charma.cloud/">
+<meta property="og:image" content="https://vm.charma.cloud/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="sv_SE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Loftahammarstipset – VM 2026">
+<meta name="twitter:description" content="Tippa fotbolls-VM 2026 med polarna – poängliga, matcher och slutspel live.">
+<meta name="twitter:image" content="https://vm.charma.cloud/og.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Loftahammar">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232563ff'/%3E%3Cstop offset='1' stop-color='%238b5cf6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Ccircle cx='50' cy='50' r='24' fill='none' stroke='white' stroke-width='7'/%3E%3C/svg%3E">
 <style>
 :root{--blue:#2563ff;--blue-deep:#0b3bd6;--indigo:#5b6cff;--yellow:#ffc400;--yellow-deep:#f5a700;--grass:#15c26b;--grass-deep:#0f9a55;--up:#15c26b;--down:#ff4d63;--flat:#9aa6bd;--gold:#f3b015;--silver:#9fb0c6;--bronze:#cd8a52;--r:20px;--r-sm:14px;--ease:cubic-bezier(.22,1,.36,1)}
