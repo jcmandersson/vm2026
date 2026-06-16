@@ -70,9 +70,9 @@ byte-identical for all non-templated parts.
 
 - The middle dot `·` is stored as the literal escape `·` in several JS template strings.
   When using `Edit`, match what's actually in the file (grep first if unsure).
-- Fonts: body = `'Plus Jakarta Sans'`, logo + countdown = `'Outfit'` (loaded via one Google
-  Fonts `<link>`). Theme persists in `localStorage` (`loftahammar_theme`); intro plays once
-  per session (`loftahammar_intro`).
+- Fonts: body = `'Plus Jakarta Sans'`, logo = `'Chicle'`, countdown = `'Outfit'` (loaded via one
+  Google Fonts `<link>`). Theme persists in `localStorage` (`loftahammar_theme`), defaults to light;
+  intro plays on every page load (respecting `prefers-reduced-motion`), never on tab switch.
 - Colors are CSS variables (`--blue`, `--gold`, `--ink`, `--muted`, `--down`, …) with
   `[data-theme=light]`/`[data-theme=dark]` overrides. Reuse them; don't hardcode hex unless matching existing patterns.
 - Appended CSS lives just before `</style></head>`; later rules intentionally override earlier ones.
