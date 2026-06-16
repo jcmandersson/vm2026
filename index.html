@@ -373,7 +373,7 @@ body{letter-spacing:-.011em}
 .hdr .tog{display:grid;place-items:center}.hdr .tog svg{width:20px;height:20px}
 .hdr-foot{position:relative;z-index:2;margin-top:14px;display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;opacity:.95}
 .hdr-foot .dot{width:8px;height:8px;border-radius:50%;background:#7CFFB2;animation:pulse 1.8s infinite}
-@media(max-width:560px){.hdr h1{font-size:22px}.hdr{padding:17px 16px 13px}}
+@media(max-width:560px){.hdr h1{font-size:29px}.hdr{padding:17px 16px 13px}}
 .hdr-foot{flex-wrap:wrap}
 .hdr-me{margin-left:auto;display:inline-flex;align-items:center;gap:7px;font-weight:700}
 .hdr select{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.32);color:#fff;border-radius:9px;padding:5px 10px;font-weight:700;font-size:12.5px;font-family:inherit;backdrop-filter:blur(8px);cursor:pointer;min-width:auto;flex:0 0 auto}
@@ -439,13 +439,14 @@ body{letter-spacing:-.011em}
  .ballwrap{width:46px;height:50px}
  .ball{width:38px;height:38px;left:4px}
  .ballsh{width:26px;left:9px}
- .hdr h1{font-size:19px;line-height:1.08;word-break:break-word}
+ .hdr h1{font-size:24px;line-height:1.08;word-break:break-word}
  .hdr p{font-size:11.5px}
  .hdr .tog{width:38px;height:38px;font-size:16px}
  .hdr-foot{font-size:11px;gap:5px}
  .msel-btn{max-width:165px}
  .ttl{flex-wrap:wrap;gap:6px}
  .ttl .more{margin-left:0;flex-basis:100%}
+ .ttl #toStandings{flex-basis:auto;margin-left:auto}
  .scoregrp{gap:8px}
  .tab[data-view="h2h"]{display:none}
  #h2h{display:none!important}
@@ -598,6 +599,9 @@ body::before{opacity:.5}
 .pod .ava{width:52px;height:52px;font-size:17px;box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--ring)}
 .pod.p1 .ava{width:62px;height:62px;font-size:20px}
 .pod .nm{font-weight:800;font-size:12.5px;text-align:center;line-height:1.15;max-width:106px}
+.podnote .nmg,.podnote .nms,.podnote .nmb{white-space:nowrap}
+.podnote .nmg{color:#b8860b}.podnote .nms{color:#67788f}.podnote .nmb{color:#a86a36}
+[data-theme=dark] .podnote .nmg{color:var(--gold)}[data-theme=dark] .podnote .nms{color:var(--silver)}[data-theme=dark] .podnote .nmb{color:var(--bronze)}
 .pod .pts{font-weight:900;font-size:14px;color:var(--ink)}
 .pod .ped{width:100%;margin-top:3px;border-radius:13px 13px 0 0;display:grid;place-items:center;font-weight:900;font-size:17px;color:var(--ink2);border:1px solid var(--line2);border-bottom:none;background:var(--soft)}
 .pod.p1 .ped{height:60px;color:var(--ink);background:linear-gradient(180deg,color-mix(in srgb,var(--gold) 20%,var(--card)),var(--card))}
@@ -609,7 +613,7 @@ body::before{opacity:.5}
 /* gula planlinjer + gul undertext i headern */
 .hdr-deco{border-color:rgba(255,206,0,.6);background:linear-gradient(90deg,transparent calc(50% - 1px),rgba(255,206,0,.6) calc(50% - 1px),rgba(255,206,0,.6) calc(50% + 1px),transparent calc(50% + 1px))}
 .hdr::after{border-color:rgba(255,206,0,.6)}
-.hdr p{color:#ffd24a}
+.hdr p{color:#fff}
 .pod.p1 .ped{height:94px}
 .pod.p2 .ped{height:66px}
 .pod.p3 .ped{height:48px}
@@ -718,6 +722,14 @@ body::before{opacity:.5}
 .meprof{align-items:center;justify-content:center;width:36px;height:36px;border-radius:11px;border:1px solid rgba(255,255,255,.34);background:rgba(255,255,255,.18);color:#fff;cursor:pointer;padding:0;flex:0 0 auto;transition:.2s var(--ease)}
 .meprof:hover{background:rgba(255,255,255,.3);transform:translateY(-1px)}
 .meprof svg{width:19px;height:19px}
+.mebar{display:none;align-items:center;margin:0 0 16px}
+.mebar .hdr-me{width:100%;margin:0;display:flex;align-items:center;flex-wrap:wrap;gap:9px}
+.mebar #meLabel{font-size:13px;font-weight:700;color:var(--muted);order:-1;flex-basis:100%;margin:0}
+.mebar .msel{flex:1;min-width:0}
+.mebar .msel-btn{width:100%;max-width:none;justify-content:flex-start;background:var(--card);border:1px solid var(--line);color:var(--ink);backdrop-filter:none;-webkit-backdrop-filter:none;box-shadow:var(--shs);padding:9px 12px;border-radius:12px;font-size:13.5px}
+.mebar .msel-btn:hover{background:var(--soft2)}
+.mebar .meprof{background:var(--card);border:1px solid var(--line);color:var(--ink);width:42px;height:42px;border-radius:12px;box-shadow:var(--shs)}
+.mebar .meprof:hover{background:var(--soft2);transform:translateY(-1px)}
 .mxh-top{position:absolute;top:14px;left:22px;right:22px;display:flex;align-items:center;justify-content:space-between;gap:10px}
 .mxh-meta{font-size:12px;font-weight:700;color:var(--muted)}
 .mxh-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:900;letter-spacing:1.6px;text-transform:uppercase;color:var(--blue)}
@@ -761,8 +773,9 @@ body::before{-webkit-mask-image:linear-gradient(to bottom,#000 55%,transparent);
       <div class="hdr-txt"><h1>Loftahammarstipset</h1><p>VM 2026 · 11 juni – 19 juli</p></div>
       <button class="tog" id="themeBtn" aria-label="Växla mörkt/ljust läge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button>
     </div>
-    <div class="hdr-foot"><span class="dot"></span><span id="updatedAt">—</span><span class="hdr-me"><button class="meprof" id="meProf" type="button" aria-label="Visa min tipslapp" title="Min tipslapp" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button><span id="meLabel">Jag är:</span> <div class="msel" id="meDD"><button class="msel-btn" id="meBtn"></button><div class="msel-pop" id="mePop"></div></div></span></div>
+    <div class="hdr-foot"><span class="dot"></span><span id="updatedAt">—</span></div>
   </header>
+  <div class="mebar"><span class="hdr-me"><button class="meprof" id="meProf" type="button" aria-label="Visa min tipslapp" title="Min tipslapp" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></button><div class="msel" id="meDD"><button class="msel-btn" id="meBtn"></button><div class="msel-pop" id="mePop"></div></div></span></div>
   <div class="tabs" id="tabs">
     <button class="tab active" data-view="dash"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></span>Hem</button>
     <button class="tab" data-view="standings"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4h12v3a6 6 0 0 1-12 0V4z"/><path d="M6 5H3v2a3 3 0 0 0 3 3"/><path d="M18 5h3v2a3 3 0 0 1-3 3"/><path d="M9 18h6M12 14v4"/></svg></span>Poänglista</button>
@@ -868,7 +881,7 @@ function label(){btn.innerHTML=ME?`<span class="msa" style="background:${colorFo
 function close(){dd.classList.remove("open");pop.classList.remove("open");}
 function pick(v){ME=v||null;try{ME?localStorage.setItem("loftahammar_me",ME):localStorage.removeItem("loftahammar_me");}catch(e){}close();label();build();renderMeHem();renderPodium();renderRank();renderFeatured();renderMatchList();renderBracket();}
 function build(){pop.innerHTML=`<button class="mopt ${!ME?"sel":""}" data-v="">\u2013 ingen \u2013</button>`+D.participants.map(p=>`<button class="mopt ${p.name===ME?"sel":""}" data-v="${p.name}"><span class="msa" style="background:${colorFor(p.name)}">${initials(p.name)}</span>${p.name}${p.name===ME?'<span class="mck">\u2713</span>':""}</button>`).join("");pop.querySelectorAll(".mopt").forEach(o=>o.onclick=()=>pick(o.dataset.v));dd.classList.toggle("needpick",!ME);}
-function openPop(){const r=btn.getBoundingClientRect();pop.style.top=(r.bottom+8)+"px";pop.style.right=Math.max(8,window.innerWidth-r.right)+"px";dd.classList.add("open");pop.classList.add("open");}
+function openPop(){const r=btn.getBoundingClientRect();pop.style.top=(r.bottom+8)+"px";if(r.width>=260){pop.style.left=r.left+"px";pop.style.right="auto";pop.style.width=r.width+"px";pop.style.minWidth=r.width+"px";}else{pop.style.right=Math.max(8,window.innerWidth-r.right)+"px";pop.style.left="auto";pop.style.width="";pop.style.minWidth="";}dd.classList.add("open");pop.classList.add("open");}
 btn.onclick=e=>{e.stopPropagation();pop.classList.contains("open")?close():openPop();};
 document.addEventListener("click",e=>{if(!dd.contains(e.target)&&!pop.contains(e.target))close();});
 window.addEventListener("scroll",close);window.addEventListener("resize",close);
@@ -883,15 +896,15 @@ function renderPodium(){
   const top=PLIST.slice(0,3);const order=[top[1],top[0],top[2]];const cls=["p2","p1","p3"];const rank=[2,1,3];
   document.getElementById("podium").innerHTML=order.map((p,i)=>p?`<div class="pod ${cls[i]} ${p.name===ME?"me":""}" data-name="${p.name}"><span class="ava" style="background:${colorFor(p.name)}">${initials(p.name)}</span><span class="nm">${p.name}</span>${p.name===ME?'<span class="dut">DU</span>':""}<span class="pts">${p.total} poäng</span><div class="ped"><span class="ped-rank">${rank[i]}:a</span></div></div>`:'<div></div>').join("");
   document.getElementById("podium").querySelectorAll(".pod").forEach(el=>el.onclick=()=>openPerson(el.dataset.name));
-  var _pn;
+  var _pn,_mn=function(n,pl){var c=pl===1?"nmg":pl===2?"nms":"nmb";return '<b class="'+c+'">'+n+'</b>';};
   if(!anyPts){_pn="Turneringen har precis börjat – poängen tickar in efter varje match";}
   else{
     var _grp=[];PLIST.forEach(function(p,i){if(i>0&&p.total===PLIST[i-1].total)_grp[_grp.length-1].names.push(p.name);else _grp.push({total:p.total,place:i+1,names:[p.name]});});
     var _tie=null;for(var _k=0;_k<_grp.length;_k++){if(_grp[_k].names.length>=2&&_grp[_k].place<=3&&_grp[_k].total>0){_tie=_grp[_k];break;}}
-    if(_tie){var _ns=_tie.names;if(_ns.length>3){_pn=_ns.length+" spelare delar "+_tie.place+":a platsen";}else{var _who=_ns.length===2?_ns[0]+" och "+_ns[1]:_ns.slice(0,-1).join(", ")+" och "+_ns[_ns.length-1];_pn=_who+" ligger på delad "+_tie.place+":a plats";}}
-    else{_pn=PLIST[0].name+" leder med "+(PLIST[0].total-PLIST[1].total)+" poäng före tvåan";}
+    if(_tie){var _ns=_tie.names,_pl=_tie.place;if(_ns.length>3){_pn=_ns.length+" spelare delar "+_pl+":a platsen med "+_tie.total+" poäng vardera.";}else{var _c=_ns.map(function(n){return _mn(n,_pl);}),_who=_c.length===2?_c[0]+" och "+_c[1]:_c.slice(0,-1).join(", ")+" och "+_c[_c.length-1];_pn=_who+" ligger på delad "+_pl+":a plats med "+_tie.total+" poäng vardera.";}}
+    else{_pn=_mn(PLIST[0].name,1)+" leder med "+(PLIST[0].total-PLIST[1].total)+" poäng före tvåan";}
   }
-  document.getElementById("podnote").textContent=_pn;
+  document.getElementById("podnote").innerHTML=_pn;
 }
 function parseKick(t){const m=/(\d{1,2})\/(\d{1,2})\s+(\d{1,2})[.:](\d{2})/.exec(t||"");if(!m)return null;return new Date(2026,+m[2]-1,+m[1],+m[3],+m[4]);}
 function setupCountdown(m){var el=document.getElementById("fCd");if(!el)return;if(window._cd)clearInterval(window._cd);var nx=MATCHES.findIndex(function(x){return !x.score;}),_nm=(nx>=0&&MATCHES[nx]===m);if(m.t==="group"&&!m.score&&_nm&&isLive(m)){el.style.display="";el.innerHTML='<div class="mxh-live"><span class="mxh-livedot"></span>Inväntar resultat</div>';return;}var k=(m.t==="group"&&!m.score&&_nm)?parseKick(m.time):null;if(!k){el.innerHTML="";el.style.display="none";return;}el.style.display="";var _seg=function(n,l){return '<span class="cdu"><span class="cdn">'+("0"+n).slice(-2)+'</span><span class="cdt">'+l+'</span></span>';};function tick(){var d=k-Date.now();if(d<=0){el.innerHTML='<div class="cdlive">🟢 Avspark passerad – inväntar resultat</div>';if(window._cd)clearInterval(window._cd);return;}var dd=Math.floor(d/864e5),hh=Math.floor(d%864e5/36e5),mm=Math.floor(d%36e5/6e4),ss=Math.floor(d%6e4/1e3);el.innerHTML='<div class="cdtop">Avspark om</div><div class="cdrow">'+(dd>0?_seg(dd,"DGR")+'<span class="cdsep">:</span>':"")+_seg(hh,"TIM")+'<span class="cdsep">:</span>'+_seg(mm,"MIN")+'<span class="cdsep">:</span>'+_seg(ss,"SEK")+'</div>';}tick();window._cd=setInterval(tick,1000);}
@@ -914,7 +927,7 @@ function renderChampViz(){const el=document.getElementById("champviz");if(!el)re
 }
 function meBannerHtml(me){if(!me)return "";return `<div class="mebanner" data-name="${me.name}" style="cursor:pointer" title="Visa min tipslapp"><span class="ava">${initials(me.name)}</span><div class="bi"><div class="bl">⭐ Din ställning</div><div class="bn">${me.name} · plats #${me.rank} av ${PLIST.length}</div><div class="mebar2"><div class="mefill" style="width:${(me.total/494*100).toFixed(1)}%"></div></div></div><div class="bp"><div class="bpv">${me.total}</div><div class="bpu">poäng</div><div class="bps">av 494</div></div></div>`;}
 function updMeProf(){var _mp=document.getElementById("meProf"),_ml=document.getElementById("meLabel");if(_mp){_mp.style.display=ME?"inline-flex":"none";_mp.onclick=function(){if(ME)openPerson(ME);};}if(_ml)_ml.style.display=ME?"none":"";}
-function renderMeHem(){updMeProf();const el=document.getElementById("meHem");if(el)el.innerHTML=ME?meBannerHtml(PLIST.find(p=>p.name===ME)):'<div class="mehint">👋 Välj ditt namn där uppe för en personlig vy – din placering, dina gissningar och din poäng.</div>';}
+function renderMeHem(){updMeProf();const el=document.getElementById("meHem");if(el)el.innerHTML=ME?meBannerHtml(PLIST.find(p=>p.name===ME)):'<div class="mehint">👋 Välj ditt namn ovan för en personlig vy - Se din placering, dina gissningar och dina poäng.</div>';}
 function renderFeatured(){
   const m=MATCHES[cur];document.getElementById("fPhase").textContent=m.ph;
   const sc=document.getElementById("fScore"),st=document.getElementById("fStatus");
@@ -1068,6 +1081,7 @@ document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>goto(b.dataset.view))
 document.addEventListener("click",e=>{const c=e.target.closest?e.target.closest(".pp2[data-name],.mebanner[data-name]"):null;if(c)openPerson(c.dataset.name);});
 const tb=document.getElementById("themeBtn");if(tb){var _SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',_MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg>';function _setIco(){tb.innerHTML=document.documentElement.getAttribute("data-theme")==="dark"?_SUN:_MOON;}_setIco();tb.onclick=()=>{var d=document.documentElement.getAttribute("data-theme")==="dark",nt=d?"light":"dark";document.documentElement.setAttribute("data-theme",nt);_setIco();var mc=document.querySelector('meta[name="theme-color"]');if(mc)mc.setAttribute("content",nt==="dark"?"#070b1a":"#eef2fb");try{localStorage.setItem("loftahammar_theme",nt);}catch(e){}};}
 fillMe();renderMeHem();renderPodium();renderFeatured();renderRank();renderMatchList();renderBracket();renderTables();renderChampViz();renderUpcoming();fillSelects();setupRankControls();(function(){const _pi=document.getElementById("poengInfo");if(_pi)_pi.onclick=openScoring;})();(function(){var _ts=document.getElementById("toStandings");if(_ts)_ts.onclick=function(){goto("standings");};})();(function(){const _h=location.hash.slice(1);if(_h&&document.getElementById(_h))goto(_h,true);})();
+(function(){var me=document.querySelector(".hdr-me"),bar=document.querySelector(".mebar"),foot=document.querySelector(".hdr-foot");if(!me||!bar||!foot)return;var mq=window.matchMedia("(max-width:560px)");function place(){if(mq.matches){if(me.parentNode!==bar)bar.appendChild(me);bar.style.display="flex";}else{if(me.parentNode!==foot)foot.appendChild(me);bar.style.display="none";}}place();try{mq.addEventListener("change",place);}catch(e){mq.addListener(place);}})();
 (function(){
   var mqMob=window.matchMedia("(max-width:560px)"),mqRm=window.matchMedia("(prefers-reduced-motion:reduce)");
   var ball=document.querySelector(".hdr .ballwrap .ball")||document.querySelector(".hdr .ball");
