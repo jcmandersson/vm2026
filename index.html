@@ -290,6 +290,7 @@ select{font-size:14px;padding:10px 12px;border-radius:11px;border:1px solid var(
 .ps.close{background:color-mix(in srgb,var(--yellow) 15%,transparent)}.ps.miss .bd{color:var(--flat)}
 .ps.pshead{background:none;border:none;padding:0 10px 2px;font-size:9.5px;text-transform:uppercase;letter-spacing:.03em}
 .ps.pshead .mt,.ps.pshead .rs,.ps.pshead .bd{font-weight:800;color:var(--muted)}
+#mBody .ps.pshead{position:sticky;top:0;z-index:2;background:var(--bg);padding:5px 10px;box-shadow:0 6px 7px -6px rgba(0,10,40,.15)}
 @media(max-width:560px){.gpsub{display:block;margin-top:3px}}
 h4{font-weight:800;letter-spacing:-.2px}
 @media(max-width:560px){.wrap{padding:14px 11px 80px}.bar h1{font-size:18px}.sb .sc{font-size:28px}.fbody{gap:4px}.team .tn{font-size:12.5px}.card{padding:15px}}
@@ -1095,7 +1096,7 @@ function groupRows(pr){
     return `<div class="ps ${c}"><span class="ph">#${g[0]}</span><span class="mt">${flag(g[1],13)} ${abbr(g[1])} <span class="gp">${g[2]}\u2013${g[3]}</span> ${abbr(g[4])} ${flag(g[4],13)}</span><span class="rs">${r?`${r[0]}\u2013${r[1]}`:"\u2014"}</span><span class="bd">${pts==null?"":(pts>0?"+"+pts:"0")}</span></div>`;}).join("");
   return {rows,exact,right,gained,played};
 }
-function kboxHtml(pr){const chips=a=>a.map(t=>`<span class="kchip">${flag(t,13)} ${t}</span>`).join("");return `<div class="kbox"><b>🏆 Världsmästare:</b> ${pr.champion?flag(pr.champion,14)+" "+pr.champion:"–"}<br><b>👟 Skyttekung:</b> ${pr.skyttekung||"–"}${pr.goals?` (${pr.goals} mål)`:""}</div><h4 style="margin:12px 0 6px">🥇 Final-tips</h4><div class="kchips">${chips(pr.final)}</div>`;}
+function kboxHtml(pr){var fin=(pr.final&&pr.final.length)?pr.final.map(function(t){return flag(t,13)+" "+t;}).join(", "):"–";return `<div class="kbox"><b>🥇 Final-tips:</b> ${fin}<br><b>🏆 Världsmästare:</b> ${pr.champion?flag(pr.champion,14)+" "+pr.champion:"–"}<br><b>👟 Skyttekung:</b> ${pr.skyttekung||"–"}${pr.goals?` (${pr.goals} mål)`:""}</div>`;}
 function renderH2H(){
   const A=PLIST.find(p=>p.name===document.getElementById("h2hA").value),B=PLIST.find(p=>p.name===document.getElementById("h2hB").value);if(!A||!B)return;
   const col=p=>{const g=groupRows(p.ref);return `<div class="h2col"><div class="h2head" style="background:${colorFor(p.name)}"><span class="ava">${initials(p.name)}</span><div><div class="hn">${p.name}</div><div class="hp">#${p.rank} \u00b7 ${p.total} poäng</div></div></div><div class="h2body">${kboxHtml(p.ref)}<h4 style="margin:12px 0 6px">🎯 Gruppspel <span class="gpsub" style="font-weight:500;color:var(--muted);font-size:12px">(${g.exact+g.right} rätt tecken, varav ${g.exact} exakt \u00b7 ${g.gained} p)</span></h4><div class="psheet">${g.rows}</div></div></div>`;};
