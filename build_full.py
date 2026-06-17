@@ -685,6 +685,12 @@ body::before{opacity:.5}
 .pod:hover{transform:translateY(-4px)}
 .pod .ava{width:54px;height:54px;font-size:18px;border:none;box-shadow:0 7px 18px -8px rgba(15,35,90,.45)}
 .pod.p1 .ava{width:66px;height:66px;font-size:21px;box-shadow:0 9px 22px -8px rgba(15,35,90,.5)}
+.pod .gava-wrap{display:inline-flex;align-items:center}
+.pod .ava.gava{width:40px;height:40px;font-size:14px;border:2.5px solid var(--card);box-shadow:none;margin-left:-14px}
+.pod .gava-wrap .ava.gava:first-child{margin-left:0}
+.pod.p1 .ava.gava{width:46px;height:46px;font-size:15px;margin-left:-16px}
+.pod .ava.gava.gmore{background:var(--soft2);color:var(--muted)}
+.pod:hover .ava.gava{transform:none}
 .pod.me .ava{box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--blue),0 7px 18px -8px rgba(37,99,255,.5)}
 .pod .nm{font-weight:800;font-size:12.5px;text-align:center;line-height:1.15;max-width:104px;color:var(--ink);margin-top:7px}
 .pod.p1 .nm{font-size:13.5px}
@@ -914,9 +920,19 @@ const anyPts=PLIST.some(p=>p.total>0);
 function trendHtml(p){if(!p.delta)return"";var u=p.delta>0,n=Math.abs(p.delta);var c=u?'<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.7 6.4 5 3.1l3.3 3.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>':'<svg viewBox="0 0 10 10" aria-hidden="true"><path d="M1.7 3.6 5 6.9l3.3-3.3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';return '<span class="tr '+(u?"up":"down")+'" title="'+(u?"Upp ":"Ner ")+n+' placeringar sedan senaste matchen">'+c+n+'</span>';}
 
 function renderPodium(){
-  const top=PLIST.slice(0,3);const order=[top[1],top[0],top[2]];const cls=["p2","p1","p3"];const rank=[2,1,3];
-  document.getElementById("podium").innerHTML=order.map((p,i)=>p?`<div class="pod ${cls[i]} ${p.name===ME?"me":""}" data-name="${p.name}"><span class="ava" style="background:${colorFor(p.name)}">${initials(p.name)}</span><span class="nm">${p.name}</span>${p.name===ME?'<span class="dut">DU</span>':""}<span class="pts">${p.total} poäng</span><div class="ped"><span class="ped-rank">${rank[i]}:a</span></div></div>`:'<div></div>').join("");
-  document.getElementById("podium").querySelectorAll(".pod").forEach(el=>el.onclick=()=>openPerson(el.dataset.name));
+  if(anyPts){
+    var _tiers=[];PLIST.forEach(function(p){var l=_tiers[_tiers.length-1];if(l&&l.total===p.total)l.players.push(p);else _tiers.push({total:p.total,players:[p]});});_tiers=_tiers.slice(0,3);
+    var pent=function(t,cls,lbl){if(!t)return '<div class="pod '+cls+' empty"></div>';var ps=t.players;
+      if(ps.length===1){var p=ps[0];return '<div class="pod '+cls+(p.name===ME?' me':'')+'" data-name="'+p.name+'"><span class="ava" style="background:'+colorFor(p.name)+'">'+initials(p.name)+'</span><span class="nm">'+p.name+'</span>'+(p.name===ME?'<span class="dut">DU</span>':'')+'<span class="pts">'+p.total+' poäng</span><div class="ped"><span class="ped-rank">'+lbl+':a</span></div></div>';}
+      var sh=ps.slice(0,3),mine=ps.some(function(x){return x.name===ME;}),avs=sh.map(function(x,j){return '<span class="ava gava" style="background:'+colorFor(x.name)+';z-index:'+(9-j)+'">'+initials(x.name)+'</span>';}).join('')+(ps.length>3?'<span class="ava gava gmore">+'+(ps.length-3)+'</span>':'');
+      return '<div class="pod '+cls+' grouppod'+(mine?' me':'')+'"><span class="gava-wrap">'+avs+'</span><span class="nm">'+ps.length+' personer</span><span class="pts">'+t.total+' poäng</span><div class="ped"><span class="ped-rank">'+lbl+':a</span></div></div>';};
+    document.getElementById("podium").innerHTML=pent(_tiers[1],'p2',2)+pent(_tiers[0],'p1',1)+pent(_tiers[2],'p3',3);
+  }else{
+    var top=PLIST.slice(0,3),order=[top[1],top[0],top[2]],cls=["p2","p1","p3"],rank=[2,1,3];
+    document.getElementById("podium").innerHTML=order.map(function(p,i){return p?'<div class="pod '+cls[i]+'" data-name="'+p.name+'"><span class="ava" style="background:'+colorFor(p.name)+'">'+initials(p.name)+'</span><span class="nm">'+p.name+'</span><span class="pts">'+p.total+' poäng</span><div class="ped"><span class="ped-rank">'+rank[i]+':a</span></div></div>':'<div></div>';}).join("");
+  }
+  document.getElementById("podium").querySelectorAll(".pod[data-name]").forEach(function(el){el.onclick=function(){openPerson(el.dataset.name);};});
+  document.getElementById("podium").querySelectorAll(".grouppod").forEach(function(el){el.onclick=function(){goto("standings");};});
   var _pn,_mn=function(n,pl){var c=pl===1?"nmg":pl===2?"nms":"nmb";return '<b class="'+c+'">'+n+'</b>';};
   if(!anyPts){_pn="Turneringen har precis börjat – poängen tickar in efter varje match";}
   else{
