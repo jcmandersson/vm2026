@@ -222,6 +222,7 @@ body::before{content:"";position:fixed;inset:-15% -10% auto -10%;height:90vh;z-i
 .rk .pp{font-size:11px;color:var(--muted);font-weight:500}
 .rk .tot{font-weight:900;font-size:17px;margin-left:6px;display:flex;align-items:baseline;gap:3px}
 .rk .fire{font-size:15px;line-height:1;align-self:center;filter:drop-shadow(0 0 5px rgba(255,120,0,.55));animation:flick 1.1s ease-in-out infinite}
+.rk .bullseye{font-size:14px;line-height:1;align-self:center}
 @keyframes flick{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.14) rotate(3deg)}}
 .totu{font-size:10px;font-weight:700;color:var(--muted)}
 .tr{display:inline-flex;align-items:center;gap:1px;font-size:9.5px;font-weight:800;line-height:1}
@@ -1018,7 +1019,9 @@ function renderRank(){
   const _hd=new Date(),_htoday=("0"+_hd.getDate()).slice(-2)+"/"+("0"+(_hd.getMonth()+1)).slice(-2);
   const hotNrs=MATCHES.filter(m=>m.t==="group"&&m.score&&(m.time||"").indexOf(_htoday)===0).map(m=>m.nr);
   const hotPts=p=>{let s=0;p.ref.groups.forEach(g=>{if(hotNrs.indexOf(g[0])<0)return;const pp=gpoints([g[2],g[3],g[5]],RESULTS.group[g[0]]);if(pp)s+=pp;});return s;};
-  el.innerHTML=banner+(rows.map((p,i)=>{const hot=hotPts(p)>=5;return `<div class="rk ${p.rank===1&&anyPts?"top":""} ${p.name===ME?"me":""}" data-name="${p.name}" tabindex="0" style="animation:rise .4s var(--ease) ${i*.025}s both"><span class="pos"><span class="rkn">${p.rank===1&&anyPts?"👑":p.rank}</span>${trendHtml(p)}</span><span class="ava" style="background:${colorFor(p.name)}">${initials(p.name)}</span><span class="who"><span class="nm">${p.name}${p.name===ME?' <span class="dut">DU</span>':""}</span><span class="pp"><span class="t-ru">${p.signs} rätt tecken</span> <span class="t-ex">· varav ${p.exact} exakt</span></span></span><span class="tot">${hot?'<span class="fire" title="5+ poäng idag">🔥</span>':""}<span class="cn" data-c="${rankSort==="pig"?p.pig:rankSort==="pis"?p.pis:p.total}">0</span><span class="totu">poäng</span></span></div>`}).join("")||'<div class="hint" style="padding:8px 4px">Ingen deltagare matchar sökningen.</div>');
+  var _maxK=null,_lastNrs=[];MATCHES.forEach(function(m){if(m.t==="group"&&m.score){var k=parseKick(m.time);if(k){var kt=k.getTime();if(_maxK===null||kt>_maxK){_maxK=kt;_lastNrs=[m.nr];}else if(kt===_maxK){_lastNrs.push(m.nr);}}}});
+  const exactLatest=p=>_lastNrs.some(function(nr){return p.ref.groups.some(function(g){return g[0]===nr&&gpoints([g[2],g[3],g[5]],RESULTS.group[nr])===4;});});
+  el.innerHTML=banner+(rows.map((p,i)=>{const hot=hotPts(p)>=5;return `<div class="rk ${p.rank===1&&anyPts?"top":""} ${p.name===ME?"me":""}" data-name="${p.name}" tabindex="0" style="animation:rise .4s var(--ease) ${i*.025}s both"><span class="pos"><span class="rkn">${p.rank===1&&anyPts?"👑":p.rank}</span>${trendHtml(p)}</span><span class="ava" style="background:${colorFor(p.name)}">${initials(p.name)}</span><span class="who"><span class="nm">${p.name}${p.name===ME?' <span class="dut">DU</span>':""}</span><span class="pp"><span class="t-ru">${p.signs} rätt tecken</span> <span class="t-ex">· varav ${p.exact} exakt</span></span></span><span class="tot">${hot?'<span class="fire" title="5+ poäng idag">🔥</span>':(exactLatest(p)?'<span class="bullseye" title="Exakt resultat i senaste matchen">🎯</span>':"")}<span class="cn" data-c="${rankSort==="pig"?p.pig:rankSort==="pis"?p.pis:p.total}">0</span><span class="totu">poäng</span></span></div>`}).join("")||'<div class="hint" style="padding:8px 4px">Ingen deltagare matchar sökningen.</div>');
   el.querySelectorAll(".rk").forEach(r=>{r.onclick=()=>openPerson(r.dataset.name);r.onkeydown=e=>{if(e.key==="Enter")openPerson(r.dataset.name);};});
   el.querySelectorAll(".cn").forEach(animCount);
 }
