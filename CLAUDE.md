@@ -48,8 +48,10 @@ byte-identical for all non-templated parts.
 - `applyResults(res)` → merges into `RESULTS.group`, sets `LIVE`, rebuilds `PLIST`, updates
   `MATCHES[*].score`, `cur`, "Senast uppdaterad", and re-renders.
 - Team-name alias map (feed → app), needed because names differ:
-  `Bosnia-Herzegovina→Bosnien`, `Cape Verde Islands→Kap Verde`, `Curaçao→Curacao`,
-  `Congo DR→DR Kongo`, `Ecuador→Equador`. Keep this in sync if names change.
+  `Bosnien och Hercegovina→Bosnien` (live feed name; old `Bosnia-Herzegovina` key kept too),
+  `Cape Verde Islands→Kap Verde`, `Curaçao→Curacao`, `Congo DR→DR Kongo`, `Ecuador→Equador`.
+  Note: the feed now sends Swedish names (Schweiz, Kanada, …), so the English keys are mostly
+  legacy. Keep this in sync if names change.
 - `isLive(m)` → live if feed says IN_PLAY/PAUSED, or as a time-based fallback (kickoff
   passed and < ~2.5h ago and no score). Drives the red "PÅGÅR" treatment.
 
