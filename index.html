@@ -774,6 +774,10 @@ body::before{opacity:.5}
 .mxh-guess.rt{color:var(--grass-deep);background:color-mix(in srgb,var(--grass) 14%,transparent);border-color:color-mix(in srgb,var(--grass) 34%,transparent)}
 .mxh-guess.wr{color:#a8102b;background:color-mix(in srgb,var(--down) 12%,transparent);border-color:color-mix(in srgb,var(--down) 30%,transparent)}
 [data-theme=dark] .mxh-guess.wr{color:#ff8a9c}
+[data-theme=dark] .mxh-guess.rt{color:var(--grass)}
+[data-theme=dark] .mx-guess.wrong .gv,[data-theme=dark] .mx-guess.wrong .gl{color:#ff8a9c}
+[data-theme=dark] .mx-guess.right .gv,[data-theme=dark] .mx-guess.right .gl{color:#ffb454}
+[data-theme=dark] .mx-guess.exact .gv,[data-theme=dark] .mx-guess.exact .gl{color:var(--grass)}
 .mxh-cd{margin:0 0 4px;text-align:center}
 .cdtop{font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .cdrow{display:inline-flex;align-items:flex-start;gap:6px;color:var(--blue);font-variant-numeric:tabular-nums}
@@ -1058,7 +1062,8 @@ function picksGrouped(m){
       +'</div>';
     if(_gBoth.length)_html+='<div class="kbnote">"Ingen favorit" = tippade båda lagen exakt lika långt i sitt slutspelsträd.</div>';
     if(_none)_html+='<div class="kbnote">'+_none+' hade inget av lagen kvar så här långt.</div>';
-    return {sum:_home+' '+_gH.length+' · '+_away+' '+_gA.length+(_gBoth.length?' · lika '+_gBoth.length:''),html:_html};
+    var _sumParts=[];if(_home)_sumParts.push(_home+' '+_gH.length);if(_away)_sumParts.push(_away+' '+_gA.length);if(_gBoth.length)_sumParts.push('ingen favorit '+_gBoth.length);
+    return {sum:_sumParts.join(' · '),html:_html};
   }
   const groups={};
   PLIST.forEach(pp=>{const pk=pp.ref._g[m.nr];if(!pk)return;const k=pk[0]+"–"+pk[1];(groups[k]=groups[k]||[]).push(pp.name);});
@@ -1225,7 +1230,7 @@ function koJourneyHtml(ref,isMe){
   var remain=koRemain(ref,ks);
   var champScored=(RESULTS.champion&&ref.champion===RESULTS.champion)?10:0;tot+=champScored;
   var champChip=RESULTS.champion?(ref.champion===RESULTS.champion?'<span class="ksst win">mästare! +10p</span>':'<span class="ksst out">fel</span>'):aliveChip(ref.champion);
-  var finItems=(ref.final||[]).map(function(t){var c=((RESULTS.final||[]).indexOf(t)>=0&&!ks.elim[t])?'<span class="ksst win">i final</span>':aliveChip(t);return flag(t,14)+' '+t+' '+c;}).join(' <span class="ksr-sep">·</span> ');
+  var finItems=(ref.final||[]).map(function(t){var c;if((RESULTS.final||[]).indexOf(t)>=0){c=(RESULTS.champion===t)?'<span class="ksst win">världsmästare!</span>':(ks.elim[t]?'<span class="ksst out">förlorade finalen</span>':'<span class="ksst win">i final</span>');}else{c=aliveChip(t);}return flag(t,14)+' '+t+' '+c;}).join(' <span class="ksr-sep">·</span> ');
   return '<div class="ksbox">'
     +'<div class="kstot"><span>'+(isMe?'Din slutspelspoäng':'Slutspelspoäng')+'</span><b>'+tot+' p</b></div>'
     +(remain>0?'<div class="ksremain">🎯 Kvar att spela om: <b>'+remain+' p</b></div>':'')
@@ -1314,7 +1319,8 @@ var nm=function(t){return t?(alias[t]||t):null;};
 var fx={};D.fixtures.forEach(function(f){fx[f.grp+"|"+f.home+"|"+f.away]=f.nr;});
 var koRound={LAST_32:"16-delsfinal",LAST_16:"Åttondelsfinal",QUARTER_FINALS:"Kvartsfinal",SEMI_FINALS:"Semifinal",FINAL:"Final"};
 var advKey={LAST_32:"r16",LAST_16:"qf",QUARTER_FINALS:"sf",SEMI_FINALS:"final"};
-var out={},live={},koFixtures={},ko={},koScore={},champion=null,rs={r32:{},r16:{},qf:{},sf:{},final:{}};
+var out={},live={},koFixtures={},ko={},koScore={},koTime={},champion=null,rs={r32:{},r16:{},qf:{},sf:{},final:{}};
+var svT=function(iso){var d=new Date(iso);if(isNaN(d))return null;d=new Date(d.getTime()+7200000);var p=function(n){return (n<10?"0":"")+n;};return p(d.getUTCDate())+"/"+p(d.getUTCMonth()+1)+" "+p(d.getUTCHours())+"."+p(d.getUTCMinutes());};
 j.matches.forEach(function(m){if(m.stage!=="GROUP_STAGE")return;var hn=nm(m.homeTeam),an=nm(m.awayTeam);var g=(m.group||"").replace("GROUP_","");var nr=fx[g+"|"+hn+"|"+an];if(nr==null)return;if(m.status==="IN_PLAY"||m.status==="PAUSED"){live[nr]=true;return;}if(m.status==="FINISHED"&&m.homeScore!=null&&m.awayScore!=null)out[nr]=[m.homeScore,m.awayScore];});
 /* Slutspel: para feedens matcher med våra matchnummer per rond i KRONOLOGISK ORDNING,
    inte via exakt klockslag – feeden kan justera avsparkstider (hände med match 79). */
@@ -1324,14 +1330,15 @@ Object.keys(koRound).forEach(function(st){
   var dm=(dsR[koRound[st]]||[]).slice().sort(function(a,b){return parseKick(a.date)-parseKick(b.date);});
   var n=Math.min(fm.length,dm.length);
   for(var q=0;q<n;q++){var m=fm[q],knr=dm[q].nr,hn=nm(m.homeTeam),an=nm(m.awayTeam);
+    var tv=svT(m.utcDate);if(tv)koTime[knr]=tv;
     if(hn||an)koFixtures[knr]=[hn,an];
     if(st==="LAST_32"){if(hn)rs.r32[hn]=1;if(an)rs.r32[an]=1;}
     if(m.status==="IN_PLAY"||m.status==="PAUSED")live[knr]=true;
     if(m.status==="FINISHED"){if(m.homeScore!=null&&m.awayScore!=null)koScore[knr]=[m.homeScore,m.awayScore];
       if(m.winner==="HOME_TEAM"||m.winner==="AWAY_TEAM"){var w=m.winner==="HOME_TEAM"?hn:an;if(w){ko[knr]=w;if(advKey[st])rs[advKey[st]][w]=1;else if(st==="FINAL")champion=w;}}}}
 });
-return {group:out,updated:j.updatedAt||null,live:live,koFixtures:koFixtures,ko:ko,koScore:koScore,r32:Object.keys(rs.r32),r16:Object.keys(rs.r16),qf:Object.keys(rs.qf),sf:Object.keys(rs.sf),final:Object.keys(rs.final),champion:champion};}
-function applyResults(res){if(!res||!res.group)return;LIVE=res.live||{};Object.assign(RESULTS.group,res.group);if(res.koFixtures&&Object.keys(res.koFixtures).length)RESULTS.koFixtures=res.koFixtures;if(res.ko&&Object.keys(res.ko).length)RESULTS.ko=res.ko;["r32","r16","qf","sf","final"].forEach(function(k){if(res[k]&&res[k].length)RESULTS[k]=res[k];});if(res.champion)RESULTS.champion=res.champion;PLIST=buildPlist();MATCHES.forEach(function(m){if(m.t==="group"){m.score=RESULTS.group[m.nr]||null;}else{var _fx=RESULTS.koFixtures&&RESULTS.koFixtures[m.nr];m.home=(_fx&&_fx[0])||null;m.away=(_fx&&_fx[1])||null;m.score=(res.koScore&&res.koScore[m.nr])||null;}});cur=MATCHES.findIndex(function(m){return !m.score;});if(cur<0)cur=0;if(res.updated){var _f=fmtUpd(res.updated),_eu=document.getElementById("updatedAt");if(_f&&_eu)_eu.innerHTML="Senast uppdaterad "+_f;}renderPodium();renderFeatured();renderRank();renderMatchList();renderTables();renderChampViz();renderUpcoming();renderMeHem();renderH2H();renderBracket();renderTitleRace();}
+return {group:out,updated:j.updatedAt||null,live:live,koFixtures:koFixtures,ko:ko,koScore:koScore,koTime:koTime,r32:Object.keys(rs.r32),r16:Object.keys(rs.r16),qf:Object.keys(rs.qf),sf:Object.keys(rs.sf),final:Object.keys(rs.final),champion:champion};}
+function applyResults(res){if(!res||!res.group)return;LIVE=res.live||{};Object.assign(RESULTS.group,res.group);if(res.koFixtures&&Object.keys(res.koFixtures).length)RESULTS.koFixtures=res.koFixtures;if(res.ko&&Object.keys(res.ko).length)RESULTS.ko=res.ko;["r32","r16","qf","sf","final"].forEach(function(k){if(res[k]&&res[k].length)RESULTS[k]=res[k];});if(res.champion)RESULTS.champion=res.champion;PLIST=buildPlist();MATCHES.forEach(function(m){if(m.t==="group"){m.score=RESULTS.group[m.nr]||null;}else{var _fx=RESULTS.koFixtures&&RESULTS.koFixtures[m.nr];m.home=(_fx&&_fx[0])||null;m.away=(_fx&&_fx[1])||null;m.score=(res.koScore&&res.koScore[m.nr])||null;if(res.koTime&&res.koTime[m.nr])m.time=res.koTime[m.nr];}});if(res.koTime)D.knockout.forEach(function(k){if(res.koTime[k.nr])k.date=res.koTime[k.nr];});cur=MATCHES.findIndex(function(m){return !m.score;});if(cur<0)cur=0;if(res.updated){var _f=fmtUpd(res.updated),_eu=document.getElementById("updatedAt");if(_f&&_eu)_eu.innerHTML="Senast uppdaterad "+_f;}renderPodium();renderFeatured();renderRank();renderMatchList();renderTables();renderChampViz();renderUpcoming();renderMeHem();renderH2H();renderBracket();renderTitleRace();}
 function fetchLiveResults(cb){var url="https://n8n.charma.io/webhook/vm2026-resultat.json";var done=false;var to=setTimeout(function(){if(done)return;done=true;cb(null);},2800);try{fetch(url,{cache:"no-store"}).then(function(r){return r.json();}).then(function(j){if(done)return;done=true;clearTimeout(to);try{cb(mapFeed(j));}catch(e){cb(null);}}).catch(function(){if(done)return;done=true;clearTimeout(to);cb(null);});}catch(e){if(done)return;done=true;clearTimeout(to);cb(null);}}
 (function(){var fx=document.getElementById("introFx");var start=Date.now();function reveal(){if(!fx)return;fx.classList.add("reveal");setTimeout(function(){if(fx&&fx.parentNode)fx.parentNode.removeChild(fx);},900);}fetchLiveResults(function(res){try{if(res&&res.group&&(Object.keys(res.group).length||Object.keys(res.live||{}).length))applyResults(res);}catch(e){}if(fx){var wait=Math.max(0,900-(Date.now()-start));setTimeout(reveal,wait);}});})();
 </script></body></html>
